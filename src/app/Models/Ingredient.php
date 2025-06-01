@@ -8,4 +8,13 @@ use Illuminate\Database\Eloquent\Model;
 class Ingredient extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'name',
+        'category',
+        'product_id',
+        'stock_quantity',
+        'unit',
+        'status',
+    ];
 }

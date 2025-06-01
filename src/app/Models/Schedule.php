@@ -5,14 +5,14 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class SpecIngredient extends Model
+class Schedule extends Model
 {
     use HasFactory;
 
     protected $fillable = [
         'spec_code',
-        'ingredient_id',
-        'quantity_per_unit',
-        'unit',
+        'scheduled_date',
+        'scheduled_time',
+        'quantity_cell',
     ];
 }
