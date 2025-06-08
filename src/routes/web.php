@@ -17,6 +17,6 @@ use Laravel\Fortify\Fortify;
 |
 */
 
-Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::get('/', [HomeController::class, 'index'])->middleware('auth')->name('home');
 Route::resource('products', ProductController::class);
 Route::resource('ingredients', IngredientController::class);
