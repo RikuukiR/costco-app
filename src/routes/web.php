@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\IngredientController;
 use Laravel\Fortify\Fortify;
 
 /*
@@ -18,3 +19,4 @@ use Laravel\Fortify\Fortify;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::resource('products', ProductController::class);
+Route::resource('ingredients', IngredientController::class);

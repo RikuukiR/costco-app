@@ -1,0 +1,98 @@
+/* ヘッダー全体 */
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #383F56;
+    padding: 0 20px;
+    height: 100px;
+    position: relative;
+    color: #fff;
+}
+
+/* ロゴ */
+.header__logo-img {
+    height: 60px;
+    object-fit: contain;
+}
+
+/* タイトル中央配置 */
+.header__title {
+    position: absolute;
+    left: 45%;
+    transform: translateX(-50%);
+    font-size: 32px;
+    font-weight: bold;
+    color: #fff;
+    white-space: nowrap;
+}
+
+/* 右側コンテナ（検索 + ログアウト） */
+.header__right {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-left: auto;
+}
+
+/* 検索フォーム */
+.header__search form {
+    display: flex;
+    align-items: center;
+}
+
+.header__search input[type="text"] {
+    padding: 6px 10px;
+    height: 38px;
+    width: 320px;
+    border: none;
+    border-radius: 4px;
+    margin-right: 8px;
+}
+
+.header__search button {
+    padding: 6px 12px;
+    height: 38px;
+    width: 80px;
+    background-color: #000;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+/* ログアウトボタン */
+.header__logout a {
+    background-color: #555E72;
+    color: #fff;
+    text-decoration: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+}
+
+.header__logout a:hover {
+    background-color: #444b5e;
+}
+
+/* bodyの高さを確保（フッターと被らないように） */
+body {
+    min-height: 100vh;
+    padding-bottom: 60px;
+    /* フッター高さに合わせる */
+    position: relative;
+}
+
+/* フッターの固定スタイル */
+.footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 60px;
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    line-height: 60px;
+    font-size: 14px;
+    z-index: 999;
+}
