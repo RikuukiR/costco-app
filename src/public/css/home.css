@@ -1,0 +1,176 @@
+.home-container {
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 0 20px;
+}
+
+.card__flex {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.card__item {
+    flex: 0 0 calc(25% - 20px);
+    box-sizing: border-box;
+    background-color: #fff;
+    border: 2px solid #383F56;
+    border-radius: 12px;
+    text-align: center;
+    padding: 24px;
+    text-decoration: none;
+    color: #333;
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 180px;
+}
+
+.card__item img {
+    width: 100px;
+    height: 100px;
+    object-fit: contain;
+    margin-bottom: 16px;
+    transition: transform 0.3s ease;
+}
+
+.card__item span {
+    font-size: 18px;
+    font-weight: bold;
+    color: #383F56;
+}
+
+.card__item:hover {
+    transform: translateY(-4px);
+    background-color: #f8f9fa;
+    box-shadow: 0 8px 16px rgba(56, 63, 86, 0.15);
+}
+
+.card__item:hover img {
+    transform: scale(1.05);
+}
+
+/* リマインダーセクション */
+.reminder-section {
+    margin-top: 60px;
+    padding: 32px;
+    background-color: #fff;
+    border-radius: 12px;
+    box-shadow: 0 6px 16px rgba(56, 63, 86, 0.25);
+}
+
+.reminder-title {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 24px;
+    padding-bottom: 16px;
+    border-bottom: 2px solid #eee;
+}
+
+.reminder-title img {
+    width: 32px;
+    height: 32px;
+    object-fit: contain;
+}
+
+.reminder-title h3 {
+    margin: 0;
+    color: #383F56;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.reminder-content {
+    overflow-x: auto;
+}
+
+.reminder-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    border: 1px solid #dee2e6;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.reminder-table th,
+.reminder-table td {
+    padding: 16px;
+    border-bottom: 1px solid #dee2e6;
+    border-right: 1px solid #dee2e6;
+    font-size: 14px;
+}
+
+.reminder-table th {
+    background-color: #f8f9fa;
+    font-weight: bold;
+    color: #383F56;
+    text-align: left;
+    white-space: nowrap;
+}
+
+.reminder-table td {
+    background-color: #fff;
+}
+
+.reminder-table th:last-child,
+.reminder-table td:last-child {
+    border-right: none;
+}
+
+.reminder-table tr:last-child td {
+    border-bottom: none;
+}
+
+.reminder-table tbody tr {
+    transition: background-color 0.2s ease;
+}
+
+.reminder-table tbody tr:hover {
+    background-color: #f8f9fa;
+}
+
+/* ステータスのスタイル */
+.status-urgent {
+    color: #dc3545;
+    font-weight: bold;
+}
+
+.status-warning {
+    color: #ffc107;
+    font-weight: bold;
+}
+
+/* レスポンシブ対応 */
+@media (max-width: 1024px) {
+    .card__item {
+        flex: 0 0 calc(33.333% - 20px);
+    }
+}
+
+@media (max-width: 768px) {
+    .card__item {
+        flex: 0 0 calc(50% - 20px);
+    }
+    
+    .reminder-table {
+        min-width: 800px;
+    }
+}
+
+@media (max-width: 480px) {
+    .card__item {
+        flex: 0 0 100%;
+    }
+    
+    .home-container {
+        padding: 0 16px;
+    }
+    
+    .reminder-section {
+        padding: 24px;
+    }
+}
