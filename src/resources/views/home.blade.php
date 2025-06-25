@@ -34,8 +34,8 @@
             <span>SALES</span>
         </a>
         <a href="{{ route('sales_forecasts.index') }}" class="card__item">
-            <img src="{{ asset('images/sales_forecast-icon.png') }}" alt="売上予測">
-            <span>SALES FORECAST</span>
+            <img src="{{ asset('images/sales_forecasts-icon.png') }}" alt="売上予測">
+            <span>SALES FORECASTS</span>
         </a>
         <a href="{{ route('schedules.index') }}" class="card__item">
             <img src="{{ asset('images/schedule-icon.png') }}" alt="スケジュール管理">

@@ -1,7 +1,12 @@
 @extends('layouts.app')
 
+@section('title', 'INGREDIENTS')
+
+@section('css')
+<link rel="stylesheet" href="{{ asset('css/products/index.css') }}">
+@endsection
+
 @section('content')
-<h1>商品一覧</h1>
 
 <a href="{{ route('products.create') }}">新規登録</a>
 
