@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Cache;
 use App\Models\Sale;
+use Illuminate\Support\Facades\Log;
 
 class SalesForecastController extends Controller
 {
@@ -32,13 +33,27 @@ class SalesForecastController extends Controller
                 'temperature' => 0.7,
             ]);
 
+            // ログ出力（レスポンス全体をJSONで記録）
+            Log::info('ChatGPT API Response:', $response->json());
+
+            // コンテンツの取得
             $content = $response->json()['choices'][0]['message']['content'] ?? null;
 
-            return $content && str_starts_with($content, '予測:')
+            // バリデーション付き代替処理
+            $comment = $content && str_starts_with($content, '予測:')
                 ? $content
                 : '予測コメントを取得できませんでした。';
-        });
 
+            // 失敗時にもログ出力（わかりやすく）
+            if ($comment === '予測コメントを取得できませんでした。') {
+                Log::warning('ChatGPTの返答が不正または空です。プロンプト・レスポンスを確認：');
+                Log::debug('使用プロンプト：' . $prompt);
+                Log::debug('レスポンス全文：' . json_encode($response->json(), JSON_UNESCAPED_UNICODE));
+            }
+
+            return $comment;
+        });
+        // dd(env('OPENAI_API_KEY'));  // ← ちゃんと表示されればOK、nullや空ならNG
         return view('sales_forecasts.index', compact('sales', 'comment'));
     }
 
