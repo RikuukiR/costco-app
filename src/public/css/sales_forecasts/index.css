@@ -1,14 +1,16 @@
-
-
-
 /* モード切り替えタブ（Day / Week / Year） */
 .tab-container {
     display: flex;
     gap: 8px;
-    /* 各ボタンの間隔 */
     margin-top: 25px;
     margin-left: 25px;
     margin-bottom: 16px;
+}
+
+.tab-buttons {
+    display: flex;
+    gap: 8px;
+    /* ボタン間に隙間をつける */
 }
 
 .tab-button {
@@ -36,13 +38,12 @@
     font-weight: bold;
 }
 
-
-
-
-
-
-
-
+.sales-chart {
+    width: 90% !important;
+    height: 600px !important;
+    margin: 50px auto;
+    display: block;
+}
 
 
 /* ChatGPT コメントボックス全体 */
