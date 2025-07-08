@@ -38,24 +38,44 @@
 </div>
 
 <script>
+    console.log('targetValues', <?php echo json_encode($targetValues ?? 'not set'); ?>);
+
     // PHPから渡されたデータをJavaScript変数として定義
     var salesLabels = <?php echo json_encode($salesLabels); ?>;
     var salesValues = <?php echo json_encode($salesValues); ?>;
+    var targetValues = <?php echo json_encode($targetValues) ?>;
+    var mode = <?php echo json_encode($mode) ?>;
+
+    // データセットを構築
+    var datasets = [{
+        label: '売上金額（円）',
+        data: salesValues,
+        borderColor: 'rgba(59, 130, 246, 1)',
+        backgroundColor: 'rgba(59, 130, 246, 0.2)',
+        fill: true,
+        tension: 0.4
+    }];
+
+    // DAYモードの場合は目標金額データセットを追加
+    if (mode === 'day') {
+        datasets.push({
+            label: '目標金額（円）',
+            data: targetValues,
+            borderColor: 'rgba(255, 159, 64, 1)',
+            backgroundColor: 'rgba(255, 159, 64, 0.3)',
+            fill: true,
+            tension: 0.4,
+            pointRadius: 0
+        });
+    }
 
     const ctx = document.getElementById('salesChart').getContext('2d');
 
     const salesChart = new Chart(ctx, {
         type: 'line',
         data: {
-            labels: <?php echo json_encode($salesLabels); ?>,
-            datasets: [{
-                label: '売上金額（円）',
-                data: salesValues,
-                borderColor: 'rgba(59, 130, 246, 1)',
-                backgroundColor: 'rgba(59, 130, 246, 0.2)',
-                fill: true,
-                tension: 0.4
-            }]
+            labels: salesLabels,
+            datasets: datasets
         },
         options: {
             responsive: true,
@@ -67,8 +87,17 @@
             },
             scales: {
                 x: {
+                    ticks: {
+                        callback: function(value, index, ticks) {
+                            return this.getLabelForValue(index).split('\n');
+                        },
+                        font: {
+                            size: 12
+                        }
+                    },
                     title: {
                         display: true,
+                        text: '', // 必要であれば記述
                         font: {
                             size: 14
                         }

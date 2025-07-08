@@ -31,7 +31,8 @@ class DatabaseSeeder extends Seeder
             SchedulesTableSeeder::class,
             VolumesTableSeeder::class,
             VolumeDetailsTableSeeder::class,
-            SalesForecastsTableSeeder::class,
+            ProductSeeder::class,
+            SaleSeeder::class,
         ]);
     }
 }

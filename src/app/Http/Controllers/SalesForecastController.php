@@ -8,12 +8,15 @@ use Illuminate\Support\Facades\Cache;
 use App\Models\Sale;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Config;
+use Carbon\Carbon;
 
 class SalesForecastController extends Controller
 {
     public function index(Request $request)
     {
+        Log::info('SalesForecastController@index に入りました');
         $mode = $request->get('mode', 'day');
+        $targetValues = [];     // 初期化
 
         // モードに応じた期間の売上データ取得
         switch ($mode) {
@@ -29,23 +32,64 @@ class SalesForecastController extends Controller
 
             case 'day':
             default:
-                $sales = Sale::where('sales_date', '>=', now()->subDays(30))
-                    ->orderBy('sales_date', 'asc')->get();
+                $sales = Sale::where('sales_date', '>=', now()->subDays(14))
+                    ->orderBy('sales_date', 'asc')
+                    ->get()
+                    ->groupBy('sales_date')
+                    ->map(function ($items, $date) {
+                        return [
+                            'sales_date' => $date,
+                            'sales_amount' => $items->sum('sales_amount'),
+                        ];
+                    })->values(); // ← コレクションのキーをリセット
                 break;
         }
 
-        // 配列形式でデータをJSに渡すために整形// 例：Controller（DAY/WEEK/YEAR でまとめ方を変える）
-        $salesLabels = $sales->map(function ($sale) use ($mode) {
-            if ($mode === 'day') return \Carbon\Carbon::parse($sale->sales_date)->format('n/j');
-            if ($mode === 'week') return \Carbon\Carbon::parse($sale->sales_date)->format('W週');
-            if ($mode === 'year') return \Carbon\Carbon::parse($sale->sales_date)->format('Y年');
-        });
-        $salesValues = $sales->pluck('sales_amount')->toArray();
+        // デバッグ情報をログに出力
+        Log::info('SalesForecast Debug', [
+            'mode' => $mode,
+            'sales_count' => $sales->count(),
+            'sales_data' => $sales->toArray()
+        ]);
 
+        // 曜日別目標金額とグラフデータ生成
+        $salesLabels = [];
+        $salesValues = [];
+        $targetValues = [];
+        $weekdays = ['日', '月', '火', '水', '木', '金', '土'];
+        $goals = [
+            'Mon' => 1800000,
+            'Tue' => 1800000,
+            'Wed' => 2000000,
+            'Thu' => 2500000,
+            'Fri' => 2800000,
+            'Sat' => 4800000,
+            'Sun' => 4800000,
+        ];
+
+        $prevMonth = null;
+
+        foreach ($sales as $sale) {
+            $date = Carbon::parse($sale['sales_date']);
+            $month = $date->format('n');
+            $day = $date->format('j');
+            $weekdayEng = $date->format('D');
+            $weekdayJp = $weekdays[$date->dayOfWeek];
+
+            if ($month !== $prevMonth) {
+                $salesLabels[] = "{$month}/{$day}\n（{$weekdayJp}）";
+                $prevMonth = $month;
+            } else {
+                $salesLabels[] = "{$day}\n（{$weekdayJp}）";
+            }
+
+            $salesValues[] = $sale['sales_amount'];
+            $targetValues[] = $goals[$weekdayEng] ?? 0;
+        }
         // モードごと + 日付ごとでキャッシュキーを生成
         $cacheKey = 'forecast_' . $mode . '_' . now()->toDateString();
 
-        // 
+        // .envから読み取り
         $useOpenAI = config('services.openai.enabled');
 
         // キャッシュの設定と停止するための分岐を追加
@@ -86,7 +130,7 @@ class SalesForecastController extends Controller
         });
 
         // 3＋2の変数を渡しながら画面遷移
-        return view('sales_forecasts.index', compact('sales', 'comment', 'mode', 'salesLabels', 'salesValues'));
+        return view('sales_forecasts.index', compact('sales', 'comment', 'mode', 'salesLabels', 'salesValues', 'targetValues'));
     }
 
     public function create()
