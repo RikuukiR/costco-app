@@ -18,7 +18,7 @@ class SaleFactory extends Factory
         $date = $this->faker->dateTimeBetween('-60 days', 'now');
         $weekday = (int) $date->format('w'); // 0:日〜6:土
 
-        // 曜日別目標金額
+        // 曜日別目標金額（ダミーデータ用）
         $goals = [
             0 => 4800000, // 日
             1 => 1800000, // 月
@@ -31,7 +31,7 @@ class SaleFactory extends Factory
         $goal = $goals[$weekday];
 
         // 目標金額の70〜100%でランダムに売上金額を生成
-        $salesAmount = $this->faker->numberBetween((int)($goal * 0.7), $goal);
+        $salesAmount = $this->faker->numberBetween((int)($goal * 0.8), (int)($goal * 1.05));
 
         return [
             'spec_code' => $specCode,

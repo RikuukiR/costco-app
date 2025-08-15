@@ -15,14 +15,26 @@ class SalesForecastController extends Controller
     public function index(Request $request)
     {
         Log::info('SalesForecastController@index に入りました');
+        // モードを取得、デフォルトはDAY
         $mode = $request->get('mode', 'day');
-        $targetValues = [];     // 初期化
+        //目標金額配列を初期化
+        $targetValues = [];
 
         // モードに応じた期間の売上データ取得
         switch ($mode) {
             case 'week':
-                $sales = Sale::where('sales_date', '>=', now()->subWeeks(12))
-                    ->orderBy('sales_date', 'asc')->get();
+                $sales = Sale::where('sales_date', '>=', now()->subWeeks(24))
+                    ->orderBy('sales_date', 'asc')
+                    ->get()
+                    ->groupBy(function ($item) {
+                        return Carbon::parse($item->sales_date)->format('n/j（第' . $date->format('W') . '週）');
+                    })
+                    ->map(function ($items, $week) {
+                        return [
+                            'sales_date' => $week,
+                            'sales_amount' => $items->sum('sales_amount'),
+                        ];
+                    })->values();
                 break;
 
             case 'year':
@@ -44,13 +56,6 @@ class SalesForecastController extends Controller
                     })->values(); // ← コレクションのキーをリセット
                 break;
         }
-
-        // デバッグ情報をログに出力
-        Log::info('SalesForecast Debug', [
-            'mode' => $mode,
-            'sales_count' => $sales->count(),
-            'sales_data' => $sales->toArray()
-        ]);
 
         // 曜日別目標金額とグラフデータ生成
         $salesLabels = [];

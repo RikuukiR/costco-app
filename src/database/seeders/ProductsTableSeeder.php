@@ -11,6 +11,15 @@ class ProductsTableSeeder extends Seeder
     {
         $products = [
             [
+                // 部署全体売上用のダミー商品を追加
+                'spec_code' => '00000',
+                'name' => '部署全体売上用',
+                'image_path' => null,
+                'price' => 0,
+                'target_weight' => 0,
+                'category' => null,
+            ],
+            [
                 'spec_code' => '00001',
                 'name' => '特製ハンバーグ',
                 'image_path' => null,
