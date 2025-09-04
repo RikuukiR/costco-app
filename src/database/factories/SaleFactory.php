@@ -3,7 +3,6 @@
 namespace Database\Factories;
 
 use App\Models\Sale;
-use App\Models\Product;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class SaleFactory extends Factory
@@ -12,13 +11,11 @@ class SaleFactory extends Factory
 
     public function definition()
     {
-        $specCode = optional(Product::inRandomOrder()->first())->spec_code ?? '00001';
+        // 過去5年間〜未来1年間のランダムなデータを生成
+        $date = $this->faker->dateTimeBetween('-5 years', '+1 years');
+        $weekday = (int) $date->format('w');
 
-        // 過去60日間のランダムな日付
-        $date = $this->faker->dateTimeBetween('-60 days', 'now');
-        $weekday = (int) $date->format('w'); // 0:日〜6:土
-
-        // 曜日別目標金額（ダミーデータ用）
+        // 曜日別の売上基準額
         $goals = [
             0 => 4800000, // 日
             1 => 1800000, // 月
@@ -28,13 +25,13 @@ class SaleFactory extends Factory
             5 => 2800000, // 金
             6 => 4800000, // 土
         ];
-        $goal = $goals[$weekday];
+        $baseSales = $goals[$weekday] / 20; // 1商品あたりの売上基準額を調整（テストデータの質の向上のため）
 
-        // 目標金額の70〜100%でランダムに売上金額を生成
-        $salesAmount = $this->faker->numberBetween((int)($goal * 0.8), (int)($goal * 1.05));
+        // 基準額の80%〜120%でランダムに売上金額を生成（テストデータの質の向上のため）
+        $salesAmount = $this->faker->numberBetween((int)($baseSales * 0.8), (int)($baseSales * 1.2));
 
         return [
-            'spec_code' => $specCode,
+            // spec_codeはSeeder側で指定するため、ここでは設定しない
             'sales_amount' => $salesAmount,
             'sales_date' => $date->format('Y-m-d'),
         ];

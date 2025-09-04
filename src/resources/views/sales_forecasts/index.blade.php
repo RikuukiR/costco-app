@@ -43,8 +43,9 @@
     // PHPから渡されたデータをJavaScript変数として定義
     var salesLabels = <?php echo json_encode($salesLabels); ?>;
     var salesValues = <?php echo json_encode($salesValues); ?>;
-    var targetValues = <?php echo json_encode($targetValues) ?>;
-    var mode = <?php echo json_encode($mode) ?>;
+    var targetValues = <?php echo json_encode($targetValues); ?>;
+    var mode = <?php echo json_encode($mode); ?>;
+    var allValues = salesValues.concat(targetValues);
 
     // データセットを構築
     var datasets = [{
@@ -56,10 +57,15 @@
         tension: 0.4
     }];
 
-    // DAYモードの場合は目標金額データセットを追加
-    if (mode === 'day') {
+    // targetValuesが空でなければ、モードに応じて目標グラフを追加
+    if (Array.isArray(targetValues) && targetValues.length > 0) {
+        let targetLabel = '目標金額（円）'; // デフォルトラベル
+        if (mode === 'week') {
+            targetLabel = '週間目標金額（円）';
+        }
+
         datasets.push({
-            label: '目標金額（円）',
+            label: targetLabel,
             data: targetValues,
             borderColor: 'rgba(255, 159, 64, 1)',
             backgroundColor: 'rgba(255, 159, 64, 0.3)',
@@ -106,7 +112,7 @@
                 y: {
                     beginAtZero: true,
                     // 上限を自動で設定
-                    suggestedMax: Math.max(...salesValues) * 1.1,
+                    suggestedMax: allValues.length > 0 ? Math.max(...allValues) * 1.1 : undefined,
                     title: {
                         display: true,
                         text: '売上金額（円）',

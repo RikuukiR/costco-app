@@ -4,40 +4,54 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use App\Models\Sale;
-use Carbon\Carbon;
+use App\Models\Product;
+use Carbon\CarbonPeriod;
 
 class SalesTableSeeder extends Seeder
 {
     public function run(): void
     {
-        Sale::create([
-            'spec_code' => '00001',
-            'sales_amount' => 25000.00,
-            'sales_date' => Carbon::now()->subDays(5)->toDateString(),
-        ]);
+        // 既存のデータをクリア
+        Sale::query()->delete();
 
-        Sale::create([
-            'spec_code' => '00002',
-            'sales_amount' => 30000.00,
-            'sales_date' => Carbon::now()->subDays(4)->toDateString(),
-        ]);
+        // 登録されている全ての商品を取得
+        $products = Product::all();
+        if ($products->isEmpty()) {
+            // 商品がなければ処理を終了
+            return;
+        }
 
-        Sale::create([
-            'spec_code' => '00003',
-            'sales_amount' => 18000.00,
-            'sales_date' => Carbon::now()->subDays(3)->toDateString(),
-        ]);
+        // 挿入するデータを一時的に貯める配列
+        $salesData = [];
+        // 一度に挿入する件数（メモリ使用量を調整するため）
+        $chunkSize = 500;
 
-        Sale::create([
-            'spec_code' => '00004',
-            'sales_amount' => 22000.00,
-            'sales_date' => Carbon::now()->subDays(2)->toDateString(),
-        ]);
+        // 過去5年〜未来1年の日付を1日ずつループ
+        $period = CarbonPeriod::create(now()->subYears(5), now()->addYear());
 
-        Sale::create([
-            'spec_code' => '00005',
-            'sales_amount' => 27000.00,
-            'sales_date' => Carbon::now()->subDay()->toDateString(),
-        ]);
+        foreach ($period as $date) {
+            // 各商品に対して、その日の売上データを生成
+            foreach ($products as $product) {
+                // Factoryを使ってデータの内容を生成するが、DBには保存しない
+                $sale = Sale::factory()->make([
+                    'spec_code' => $product->spec_code,
+                    'sales_date' => $date->format('Y-m-d'),
+                ]);
+                // 配列に変換して追加
+                $salesData[] = $sale->toArray();
+            }
+
+            // 一定数たまったら、まとめてDBに挿入する
+            if (count($salesData) >= $chunkSize) {
+                Sale::insert($salesData);
+                // 配列をリセット
+                $salesData = [];
+            }
+        }
+
+        // ループ後に残ったデータがあれば、それも挿入する
+        if (!empty($salesData)) {
+            Sale::insert($salesData);
+        }
     }
 }

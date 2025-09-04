@@ -40,7 +40,8 @@
 ### 1. リポジトリのクローン
 
 ```bash
-git clone https://github.com/your-username/costco-app.git
+git clone git@github.com:Estra-Coachtech/laravel-docker-template.git
+mv laravel-docker-template costco-app
 cd costco-app
 ```
 
@@ -65,11 +66,17 @@ DB_PASSWORD=password
 OPENAI_API_KEY=your_openai_api_key
 ```
 
-### 3. Docker コンテナのビルドと起動
+### 2. Docker コンテナのビルドと起動
+
+Docker Desktop アプリケーションを立ち上げてから、以下のコマンドを実行します。
 
 ```bash
 docker-compose up -d --build
 ```
+
+### 3. Laravel 環境構築
+
+まず、PHP コンテナに入ります。
 
 ### 4. 依存パッケージのインストール
 

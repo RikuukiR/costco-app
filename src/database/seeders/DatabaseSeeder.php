@@ -21,18 +21,16 @@ class DatabaseSeeder extends Seeder
         $this->call([
             UsersTableSeeder::class,
             ProductsTableSeeder::class,
-            IngredientsTableSeeder::class,
-            RecipeStepsTableSeeder::class,
-            IngredientUsagesTableSeeder::class,
-            SpecIngredientsTableSeeder::class,
+            // IngredientsTableSeeder::class,
+            // RecipeStepsTableSeeder::class,
+            // IngredientUsagesTableSeeder::class,
+            // SpecIngredientsTableSeeder::class,
             SalesTableSeeder::class,
-            DestroysTableSeeder::class,
-            WeightsTableSeeder::class,
-            SchedulesTableSeeder::class,
-            VolumesTableSeeder::class,
-            VolumeDetailsTableSeeder::class,
-            ProductSeeder::class,
-            SaleSeeder::class,
+            // DestroysTableSeeder::class,
+            // WeightsTableSeeder::class,
+            // SchedulesTableSeeder::class,
+            // VolumesTableSeeder::class,
+            // VolumeDetailsTableSeeder::class,
         ]);
     }
 }
