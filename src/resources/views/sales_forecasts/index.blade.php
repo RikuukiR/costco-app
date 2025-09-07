@@ -2,6 +2,13 @@
 
 @section('title', 'SALES FORECASTS')
 
+@section('back_button')
+    <a href="{{ route('home') }}" class="back-button">
+        <i class="fa-solid fa-arrow-left"></i>
+        back
+    </a>
+@endsection
+
 @section('css')
 <link rel="stylesheet" href="{{ asset('css/sales_forecasts/index.css') }}">
 @endsection

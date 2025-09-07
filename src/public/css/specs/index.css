@@ -15,7 +15,7 @@
     border: 1px solid #ddd;
     border-radius: 8px;
     overflow: hidden;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     transition: transform 0.2s, box-shadow 0.2s;
     background: white;
     text-decoration: none;
@@ -24,7 +24,7 @@
 
 .spec-card:hover {
     transform: translateY(-2px);
-    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
     text-decoration: none;
     color: inherit;
 }
@@ -85,26 +85,39 @@
     border-radius: 5px;
 }
 
+.search-section form {
+    display: flex;
+    align-items: stretch;
+    height: 38px;
+    max-width: 500px;
+    gap: 8px;
+}
+
 .search-input {
-    width: 100%;
-    max-width: 400px;
+    flex: 1;
     padding: 8px 12px;
     border: 1px solid #ddd;
     border-radius: 4px;
 }
 
 .search-button {
-    margin-left: 10px;
-    padding: 8px 15px;
-    background-color: #007bff;
-    color: white;
+    height: 38px;
+    padding: 8px 16px;
+    background-color: #555e72;
+    color: #fff;
     border: none;
     border-radius: 4px;
     cursor: pointer;
+    font-size: 14px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    white-space: nowrap;
+    flex-shrink: 0;
 }
 
 .search-button:hover {
-    background-color: #0056b3;
+    background-color: #444b5e;
 }
 
 .alert-success {

@@ -1,13 +1,13 @@
 @extends('layouts.app')
 
-@section('title', 'レシピ詳細')
+@section('title', 'SPEC DETAIL')
 
 @section('css')
 <link rel="stylesheet" href="{{ asset('css/specs/show.css') }}">
 @endsection
 
 @section('content')
-<div class="spec-detail-container">
+<div class="spec-container">
     <!-- ヘッダー情報 -->
     <div class="spec-header">
         <div class="spec-code">製造番号: {{ $product->spec_code }}</div>
@@ -88,13 +88,6 @@
                 @endif
             </div>
         </div>
-    </div>
-
-    <!-- 戻るボタン -->
-    <div style="text-align: center;">
-        <a href="{{ route('specs.index') }}" class="back-button">
-            <i class="fas fa-arrow-left"></i> レシピ一覧に戻る
-        </a>
     </div>
 </div>
 @endsection

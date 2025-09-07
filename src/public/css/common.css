@@ -3,14 +3,41 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    background-color: #383F56;
+    background-color: #383f56;
     padding: 0 20px;
     height: 100px;
     position: relative;
     color: #fff;
 }
 
+/* 戻るボタンのスタイル */
+header .back-button {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    position: absolute;
+    left: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    padding: 10px 20px;
+    background-color: #6c757d;
+    color: white !important;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    text-decoration: none !important;
+    white-space: nowrap;
+}
+
+header .back-button:hover {
+    background-color: #5a6268;
+}
+
 /* ロゴ */
+.header__logo {
+    margin-left: 120px; /* 戻るボタンと重ならないように左マージンを追加 */
+}
 .header__logo-img {
     height: 80px;
     width: 300px;
@@ -109,7 +136,7 @@
     gap: 12px;
     color: #fff;
     text-decoration: none;
-    background-color: #555E72;
+    background-color: #555e72;
     padding: 10px 20px;
     border-radius: 4px;
 }
@@ -121,7 +148,7 @@
 
 /* ログアウトボタン */
 .header__logout a {
-    background-color: #555E72;
+    background-color: #555e72;
     color: #fff;
     text-decoration: none;
     padding: 8px 16px;

@@ -8,18 +8,6 @@
 
 @section('content')
 <div class="spec-container">
-    
-    <!-- 検索機能 -->
-    <div class="search-section">
-        <form action="{{ route('specs.index') }}" method="GET">
-            <input type="text" name="keyword" class="search-input" 
-                   placeholder="製造番号または商品名で検索..." 
-                   value="{{ request('keyword') }}">
-            <button type="submit" class="search-button">
-                検索
-            </button>
-        </form>
-    </div>
 
     @if(session('success'))
         <div class="alert alert-success">

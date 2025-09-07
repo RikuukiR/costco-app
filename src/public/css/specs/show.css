@@ -3,7 +3,6 @@
 .spec-detail-container {
     max-width: 1000px;
     margin: 0 auto;
-    padding: 20px;
 }
 
 .spec-header {
@@ -132,21 +131,6 @@
     font-style: italic;
 }
 
-.back-button {
-    display: inline-block;
-    padding: 10px 20px;
-    background-color: #6c757d;
-    color: white;
-    text-decoration: none;
-    border-radius: 5px;
-    margin-top: 20px;
-}
-
-.back-button:hover {
-    background-color: #5a6268;
-    color: white;
-    text-decoration: none;
-}
 
 .product-image {
     text-align: center;
@@ -157,7 +141,7 @@
     max-width: 300px;
     max-height: 300px;
     border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .no-image-placeholder {
@@ -177,11 +161,11 @@
     .content-grid {
         grid-template-columns: 1fr;
     }
-    
+
     .spec-info {
         gap: 15px;
     }
-    
+
     .spec-detail-container {
         padding: 10px;
     }

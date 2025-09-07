@@ -14,6 +14,14 @@
 
 <body>
     <header class="header">
+        @section('back_button')
+            @if (!Route::is('login') && !Route::is('home'))
+                <a href="#" onclick="event.preventDefault(); history.back();" class="back-button">
+                    <i class="fa-solid fa-arrow-left"></i>
+                    back
+                </a>
+            @endif
+        @show
         <div class="header__logo">
             <a href="{{ route('home') }}">
                 <img src="{{ asset('images/logo.png') }}" alt="ロゴ" class="header__logo-img">
