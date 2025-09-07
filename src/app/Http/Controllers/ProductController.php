@@ -23,51 +23,52 @@ class ProductController extends Controller
     // 新規登録処理
     public function store(Request $request)
     {
-        // バリデーションは後で追加
-        $product = new Product();
-        $product->spec_code = $request->spec_code;
-        $product->name = $request->name;
-        $product->image_path = $request->image_path;
-        $product->price = $request->price;
-        $product->target_weight = $request->target_weight;
-        $product->category = $request->category;
-        $product->save();
+        $validated = $request->validate([
+            'spec_code' => 'required|string|unique:products,spec_code|max:10',
+            'name' => 'required|string|max:100',
+            'image_path' => 'nullable|string|max:255',
+            'price' => 'nullable|numeric',
+            'target_weight' => 'required|numeric',
+            'category' => 'nullable|string|max:50',
+        ]);
+
+        Product::create($validated);
 
         return redirect()->route('products.index')->with('success', '商品を登録しました');
     }
 
     // 詳細表示
-    public function show($spec_code)
+    public function show(Product $product)
     {
-        $product = Product::findOrFail($spec_code);
+        $product->load('recipeSteps', 'specIngredients.ingredient');
         return view('products.show', compact('product'));
     }
 
     // 編集フォーム表示
-    public function edit($spec_code)
+    public function edit(Product $product)
     {
-        $product = Product::findOrFail($spec_code);
         return view('products.edit', compact('product'));
     }
 
     // 更新処理
-    public function update(Request $request, $spec_code)
+    public function update(Request $request, Product $product)
     {
-        $product = Product::findOrFail($spec_code);
-        $product->name = $request->name;
-        $product->image_path = $request->image_path;
-        $product->price = $request->price;
-        $product->target_weight = $request->target_weight;
-        $product->category = $request->category;
-        $product->save();
+        $validated = $request->validate([
+            'name' => 'required|string|max:100',
+            'image_path' => 'nullable|string|max:255',
+            'price' => 'nullable|numeric',
+            'target_weight' => 'required|numeric',
+            'category' => 'nullable|string|max:50',
+        ]);
+
+        $product->update($validated);
 
         return redirect()->route('products.index')->with('success', '商品情報を更新しました');
     }
 
     // 削除処理
-    public function destroy($spec_code)
+    public function destroy(Product $product)
     {
-        $product = Product::findOrFail($spec_code);
         $product->delete();
 
         return redirect()->route('products.index')->with('success', '商品を削除しました');

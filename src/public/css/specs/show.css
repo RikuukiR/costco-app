@@ -1,0 +1,188 @@
+/* SPEC詳細画面のスタイル */
+
+.spec-detail-container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.spec-header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 30px;
+    border-radius: 10px;
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+.spec-code {
+    font-size: 14px;
+    opacity: 0.9;
+    margin-bottom: 5px;
+}
+
+.spec-name {
+    font-size: 28px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.spec-info {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    flex-wrap: wrap;
+}
+
+.spec-info-item {
+    text-align: center;
+}
+
+.spec-info-label {
+    font-size: 12px;
+    opacity: 0.8;
+}
+
+.spec-info-value {
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.content-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+    margin-bottom: 30px;
+}
+
+.content-section {
+    background: white;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.section-header {
+    background-color: #f8f9fa;
+    padding: 15px 20px;
+    border-bottom: 1px solid #e0e0e0;
+    font-weight: bold;
+    color: #333;
+}
+
+.section-content {
+    padding: 20px;
+}
+
+.ingredient-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.ingredient-item:last-child {
+    border-bottom: none;
+}
+
+.ingredient-name {
+    font-weight: 500;
+    color: #333;
+}
+
+.ingredient-amount {
+    color: #666;
+    font-size: 14px;
+}
+
+.recipe-step {
+    margin-bottom: 20px;
+    padding: 15px;
+    background-color: #fafafa;
+    border-radius: 5px;
+    border-left: 4px solid #667eea;
+}
+
+.step-number {
+    display: inline-block;
+    background-color: #667eea;
+    color: white;
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 25px;
+    font-size: 12px;
+    font-weight: bold;
+    margin-right: 10px;
+}
+
+.step-description {
+    display: inline-block;
+    vertical-align: top;
+    width: calc(100% - 40px);
+    line-height: 1.5;
+}
+
+.no-data {
+    text-align: center;
+    color: #999;
+    padding: 30px;
+    font-style: italic;
+}
+
+.back-button {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #6c757d;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    margin-top: 20px;
+}
+
+.back-button:hover {
+    background-color: #5a6268;
+    color: white;
+    text-decoration: none;
+}
+
+.product-image {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.product-image img {
+    max-width: 300px;
+    max-height: 300px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.no-image-placeholder {
+    width: 300px;
+    height: 200px;
+    background-color: #f5f5f5;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #999;
+    margin: 0 auto;
+}
+
+/* レスポンシブデザイン */
+@media (max-width: 768px) {
+    .content-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .spec-info {
+        gap: 15px;
+    }
+    
+    .spec-detail-container {
+        padding: 10px;
+    }
+}

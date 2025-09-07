@@ -3,44 +3,28 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Product;
 
 class SpecController extends Controller
 {
+    /**
+     * スタッフ向けレシピ一覧（カード形式）
+     */
     public function index()
     {
-        return view('specs.index');
+        $products = Product::all();
+        return view('specs.index', compact('products'));
     }
 
-    public function create()
+    /**
+     * レシピ詳細（調理手順・使用食材中心）
+     */
+    public function show(Product $product)
     {
-        return view('specs.create');
+        $product->load('recipeSteps', 'specIngredients.ingredient');
+        return view('specs.show', compact('product'));
     }
 
-    public function store(Request $request)
-    {
-        // 実装予定
-        return redirect()->route('specs.index');
-    }
-
-    public function show($id)
-    {
-        return view('specs.show');
-    }
-
-    public function edit($id)
-    {
-        return view('specs.edit');
-    }
-
-    public function update(Request $request, $id)
-    {
-        // 実装予定
-        return redirect()->route('specs.index');
-    }
-
-    public function destroy($id)
-    {
-        // 実装予定
-        return redirect()->route('specs.index');
-    }
+    // スタッフ向けなので新規作成・編集・削除機能は無効化
+    // 必要に応じて将来的に限定的な編集機能を追加可能
 }
