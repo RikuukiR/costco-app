@@ -86,6 +86,81 @@
         options: {
             responsive: true,
             plugins: {
+                tooltip: {
+                    mode: 'index',
+                    intersect: false,
+                    backgroundColor: 'rgba(255, 255, 255, 0.95)',
+                    titleColor: '#333',
+                    bodyColor: '#666',
+                    borderColor: '#ddd',
+                    borderWidth: 1,
+                    cornerRadius: 8,
+                    padding: 12,
+                    callbacks: {
+                        title: function(context) {
+                            // 日付をより読みやすい形式で表示
+                            return context[0].label;
+                        },
+                        label: function(context) {
+                            let label = context.dataset.label || '';
+                            
+                            if (label) {
+                                label += ': ';
+                            }
+                            
+                            // 金額を日本円形式でフォーマット
+                            if (context.parsed.y !== null) {
+                                label += new Intl.NumberFormat('ja-JP', {
+                                    style: 'currency',
+                                    currency: 'JPY',
+                                    minimumFractionDigits: 0
+                                }).format(context.parsed.y);
+                            }
+                            
+                            return label;
+                        },
+                        afterLabel: function(context) {
+                            // 前日比の計算と表示
+                            if (context.dataIndex > 0) {
+                                const current = context.parsed.y;
+                                const previous = context.dataset.data[context.dataIndex - 1];
+                                if (previous && current && previous !== 0) {
+                                    const change = ((current - previous) / previous * 100).toFixed(1);
+                                    return `前日比: ${change > 0 ? '+' : ''}${change}%`;
+                                }
+                            }
+                            return '';
+                        },
+                        footer: function(tooltipItems) {
+                            // 売上と目標の差額を計算
+                            let salesValue = null;
+                            let targetValue = null;
+                            
+                            tooltipItems.forEach(item => {
+                                if (item.dataset.label.includes('売上')) {
+                                    salesValue = item.parsed.y;
+                                } else if (item.dataset.label.includes('目標')) {
+                                    targetValue = item.parsed.y;
+                                }
+                            });
+                            
+                            if (salesValue !== null && targetValue !== null && targetValue !== 0) {
+                                const difference = salesValue - targetValue;
+                                const percentage = ((salesValue / targetValue - 1) * 100).toFixed(1);
+                                return [
+                                    `差額: ${new Intl.NumberFormat('ja-JP', {
+                                        style: 'currency',
+                                        currency: 'JPY',
+                                        minimumFractionDigits: 0
+                                    }).format(difference)}`,
+                                    `達成率: ${percentage > 0 ? '+' : ''}${percentage}%`
+                                ];
+                            }
+                            
+                            return '';
+                        }
+                    }
+                },
                 legend: {
                     display: true,
                     position: 'top'

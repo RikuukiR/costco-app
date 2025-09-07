@@ -57,14 +57,14 @@ class SalesForecastController extends Controller
                 break;
             case 'year':
                 // 直近5年間
-                $startDate = now()->subYears(4)->startOfMonth();
+                $startDate = now()->subYears(4)->startOfYear();
                 $endDate = now()->endOfMonth();
                 break;
             case 'day':
             default:
                 // 直近14日間
-                $startDate = now()->subDays(13);
-                $endDate = now();
+                $startDate = now()->subDays(13)->startOfDay();
+                $endDate = now()->endOfDay();
                 break;
         }
 

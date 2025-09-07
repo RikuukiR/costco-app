@@ -9,7 +9,7 @@ class SaleFactory extends Factory
 {
     protected $model = Sale::class;
 
-    public function definition()
+    public function definition()    //view重視の実現性のない、開発のためのデータ
     {
         // 過去5年間〜未来1年間のランダムなデータを生成
         $date = $this->faker->dateTimeBetween('-5 years', '+1 years');
