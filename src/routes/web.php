@@ -27,7 +27,7 @@ use Laravel\Fortify\Fortify;
 Route::get('/', [HomeController::class, 'index'])->middleware('auth')->name('home');
 
 // 管理職向け商品管理
-Route::resource('products', ProductController::class);
+Route::resource('products', ProductController::class)->middleware('manager');
 
 // スタッフ向けレシピ参照（読み取り専用）
 Route::resource('specs', SpecController::class)->only(['index', 'show']);
