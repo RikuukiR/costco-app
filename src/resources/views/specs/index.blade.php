@@ -18,7 +18,7 @@
     <!-- 商品カード一覧 -->
     <div class="spec-grid">
         @forelse ($products as $product)
-            <a href="{{ route('specs.show', $product) }}" class="spec-card">
+            <a href="{{ Auth::user()->is_manager ? route('specs.show', $product) : route('staff.specs.show', $product) }}" class="spec-card">
                 <div class="spec-card-image">
                     @if($product->image_path)
                         <img src="{{ asset($product->image_path) }}" alt="{{ $product->name }}">

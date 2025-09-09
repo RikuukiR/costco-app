@@ -29,12 +29,20 @@ Route::get('/', [HomeController::class, 'index'])->middleware('auth')->name('hom
 // 管理職向け商品管理
 Route::resource('products', ProductController::class)->middleware('manager');
 
-// スタッフ向けレシピ参照（読み取り専用）
-Route::resource('specs', SpecController::class)->only(['index', 'show']);
+// 管理職向けSPEC管理
+Route::resource('specs', SpecController::class)->middleware('manager');
+
+// スタッフ向け閲覧専用画面
+Route::prefix('staff')->name('staff.')->middleware(['auth', 'redirect_if_manager'])->group(function () {
+    Route::resource('specs', SpecController::class)->only(['index', 'show']);
+    Route::resource('ingredients', IngredientController::class)->only(['index', 'show']);
+    Route::resource('volumes', VolumeController::class)->only(['index', 'show']);
+});
+
 Route::resource('ingredients', IngredientController::class);
-Route::resource('volumes', VolumeController::class);
+Route::resource('volumes', VolumeController::class)->middleware('manager');
 Route::resource('destroys', DestroyController::class);
 Route::resource('weights', WeightController::class);
 Route::resource('sales', SaleController::class);
 Route::resource('sales_forecasts', SalesForecastController::class);
-Route::resource('schedules', ScheduleController::class);
+Route::resource('schedules', ScheduleController::class)->middleware('manager');

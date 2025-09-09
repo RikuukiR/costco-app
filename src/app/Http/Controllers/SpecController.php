@@ -33,6 +33,29 @@ class SpecController extends Controller
         return view('specs.show', compact('product'));
     }
 
-    // スタッフ向けなので新規作成・編集・削除機能は無効化
-    // 必要に応じて将来的に限定的な編集機能を追加可能
+    // ここから管理者向けのメソッドを追加
+    public function create()
+    {
+        //
+    }
+
+    public function store()
+    {
+        //
+    }
+
+    public function edit()
+    {
+        //
+    }
+
+    public function update()
+    {
+        //
+    }
+
+    public function destroy()
+    {
+        //
+    }
 }

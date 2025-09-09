@@ -9,15 +9,27 @@
 @section('content')
 <div class="home-container">
     <div class="card__flex">
-        <a href="{{ route('products.index') }}" class="card__item">
-            <img src="{{ asset('images/ingredients-icon.png') }}" alt="商品管理">
+        @if(Auth::user()->is_manager)
+        <a href="{{ route('ingredients.index') }}" class="card__item">
+        @else
+        <a href="{{ route('staff.ingredients.index') }}" class="card__item">
+        @endif
+            <img src="{{ asset('images/ingredients-icon.png') }}" alt="食材管理">
             <span>INGREDIENTS</span>
         </a>
+        @if(Auth::user()->is_manager)
         <a href="{{ route('specs.index') }}" class="card__item">
+        @else
+        <a href="{{ route('staff.specs.index') }}" class="card__item">
+        @endif
             <img src="{{ asset('images/spec-icon.png') }}" alt="SPEC管理">
             <span>SPEC</span>
         </a>
+        @if(Auth::user()->is_manager)
         <a href="{{ route('volumes.index') }}" class="card__item">
+        @else
+        <a href="{{ route('staff.volumes.index') }}" class="card__item">
+        @endif
             <img src="{{ asset('images/volume-icon.png') }}" alt="VOLUME管理">
             <span>VOLUME</span>
         </a>

@@ -1,7 +1,7 @@
 /* SPEC詳細画面のスタイル */
 
 .spec-container {
-    max-width: 1400px;
+    max-width: 1600px;
     margin: 0 auto;
     padding: 20px 40px;
     height: calc(100vh - 120px);
@@ -75,8 +75,8 @@
 
 .spec-body-grid {
     display: grid;
-    grid-template-columns: 1.5fr 3fr;
-    gap: 50px;
+    grid-template-columns: 1.3fr 3fr;
+    gap: 60px;
     align-items: start;
     height: calc(100vh - 220px);
 }
@@ -222,19 +222,24 @@
     border-radius: 10px;
     margin-bottom: 0;
     flex-shrink: 0;
+    min-width: 0;
 }
 
 .product-title-row {
     display: flex;
     justify-content: center;
     margin-bottom: 15px;
-    flex-wrap: wrap;
+    min-width: 0;
 }
 
 .product-name {
-    font-size: 28px;
+    font-size: 24px;
     font-weight: bold;
     margin: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    min-width: 0;
 }
 
 .product-details {
@@ -266,6 +271,18 @@
         overflow: visible;
         padding: 10px;
         max-width: 100%;
+        margin: 0 auto;
+    }
+
+    .product-name {
+        font-size: 20px;
+        white-space: normal;
+        overflow: visible;
+        text-overflow: unset;
+    }
+
+    .product-title-row {
+        justify-content: center;
     }
 
     .spec-body-grid {

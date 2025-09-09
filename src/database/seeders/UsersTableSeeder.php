@@ -17,5 +17,13 @@ class UsersTableSeeder extends Seeder
                 'is_manager' => true,
             ]);
         }
+        
+        if (!User::where('login_id', 'staff')->exists()) {
+            User::create([
+                'login_id' => 'staff',
+                'password' => Hash::make('password123'),
+                'is_manager' => false,
+            ]);
+        }
     }
 }
