@@ -45,4 +45,12 @@ class Product extends Model
     {
         return $this->hasMany(SpecIngredient::class, 'spec_code', 'spec_code');
     }
+
+    /**
+     * 商品に紐づく廃棄を取得
+     */
+    public function destroys()
+    {
+        return $this->hasMany(Destroy::class, 'spec_code', 'spec_code');
+    }
 }

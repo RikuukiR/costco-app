@@ -14,4 +14,12 @@ class Destroy extends Model
         'destroyed_weight',
         'destroy_date',
     ];
+
+/**
+ * 廃棄が属する商品を取得
+ */
+public function product()
+{
+    return $this->belongsTo(Product::class, 'spec_code', 'spec_code');
+}
 }
